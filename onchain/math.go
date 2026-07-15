@@ -11,11 +11,11 @@ const BasisPointMax = 10000.0
 
 // Constants for fixed-point math
 var (
-	One                = new(big.Int).Lsh(big.NewInt(1), 64)      // 2^64
-	FeePrecision       = big.NewInt(10_000_000_000)               // 10^10
-	MaxFeeRate         = big.NewInt(1_000_000_000)                // 10%
-	LimitOrderFeeShare = big.NewInt(5000)                         // 50%
-	BasisPointMaxBig   = big.NewInt(10000)                        // 10000
+	One                = new(big.Int).Lsh(big.NewInt(1), 64) // 2^64
+	FeePrecision       = big.NewInt(10_000_000_000)          // 10^10
+	MaxFeeRate         = big.NewInt(1_000_000_000)           // 10%
+	LimitOrderFeeShare = big.NewInt(5000)                    // 50%
+	BasisPointMaxBig   = big.NewInt(10000)                   // 10000
 )
 
 // U128ToBigInt converts a little-endian [16]byte u128 to *big.Int.

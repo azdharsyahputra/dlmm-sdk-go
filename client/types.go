@@ -133,44 +133,44 @@ type TokenPairWithTotal struct {
 
 // PoolPortfolioItem represents portfolio item for a pool.
 type PoolPortfolioItem struct {
-	PoolAddress            string  `json:"poolAddress"`
-	BinStep                string  `json:"binStep"`
-	BaseFee                string  `json:"baseFee"`
-	CollectFeeMode         int32   `json:"collectFeeMode"`
-	TokenXMint             string  `json:"tokenXMint"`
-	TokenYMint             string  `json:"tokenYMint"`
-	TokenXIcon             string  `json:"tokenXIcon"`
-	TokenYIcon             string  `json:"tokenYIcon"`
-	TokenX                 string  `json:"tokenX"`
-	TokenY                 string  `json:"tokenY"`
-	TotalDeposit           string  `json:"totalDeposit"`
-	TotalDepositSol        string  `json:"totalDepositSol"`
-	TotalWithdrawal        string  `json:"totalWithdrawal"`
-	TotalWithdrawalSol     string  `json:"totalWithdrawalSol"`
-	TotalFee               string  `json:"totalFee"`
-	TotalFeeSol            string  `json:"totalFeeSol"`
-	PnlUsd                 string  `json:"pnlUsd"`
-	PnlSol                 string  `json:"pnlSol"`
-	PnlPctChange           string  `json:"pnlPctChange"`
-	PnlSolPctChange        string  `json:"pnlSolPctChange"`
-	TotalDepositTokenX     string  `json:"totalDepositTokenX"`
-	TotalDepositTokenXUsd  string  `json:"totalDepositTokenXUsd"`
-	TotalDepositTokenXSol  string  `json:"totalDepositTokenXSol"`
-	TotalWithdrawalTokenX  string  `json:"totalWithdrawalTokenX"`
-	TotalWithdrawalTokenXUsd string  `json:"totalWithdrawalTokenXUsd"`
-	TotalWithdrawalTokenXSol string  `json:"totalWithdrawalTokenXSol"`
-	TotalFeeTokenX         string  `json:"totalFeeTokenX"`
-	TotalFeeTokenXUsd      string  `json:"totalFeeTokenXUsd"`
-	TotalFeeTokenXSol      string  `json:"totalFeeTokenXSol"`
-	TotalDepositTokenY     string  `json:"totalDepositTokenY"`
-	TotalDepositTokenYUsd  string  `json:"totalDepositTokenYUsd"`
-	TotalDepositTokenYSol  string  `json:"totalDepositTokenYSol"`
-	TotalWithdrawalTokenY  string  `json:"totalWithdrawalTokenY"`
-	TotalWithdrawalTokenYUsd string  `json:"totalWithdrawalTokenYUsd"`
-	TotalWithdrawalTokenYSol string  `json:"totalWithdrawalTokenYSol"`
-	TotalFeeTokenY         string  `json:"totalFeeTokenY"`
-	TotalFeeTokenYUsd      string  `json:"totalFeeTokenYUsd"`
-	TotalFeeTokenYSol      string  `json:"totalFeeTokenYSol"`
+	PoolAddress              string `json:"poolAddress"`
+	BinStep                  string `json:"binStep"`
+	BaseFee                  string `json:"baseFee"`
+	CollectFeeMode           int32  `json:"collectFeeMode"`
+	TokenXMint               string `json:"tokenXMint"`
+	TokenYMint               string `json:"tokenYMint"`
+	TokenXIcon               string `json:"tokenXIcon"`
+	TokenYIcon               string `json:"tokenYIcon"`
+	TokenX                   string `json:"tokenX"`
+	TokenY                   string `json:"tokenY"`
+	TotalDeposit             string `json:"totalDeposit"`
+	TotalDepositSol          string `json:"totalDepositSol"`
+	TotalWithdrawal          string `json:"totalWithdrawal"`
+	TotalWithdrawalSol       string `json:"totalWithdrawalSol"`
+	TotalFee                 string `json:"totalFee"`
+	TotalFeeSol              string `json:"totalFeeSol"`
+	PnlUsd                   string `json:"pnlUsd"`
+	PnlSol                   string `json:"pnlSol"`
+	PnlPctChange             string `json:"pnlPctChange"`
+	PnlSolPctChange          string `json:"pnlSolPctChange"`
+	TotalDepositTokenX       string `json:"totalDepositTokenX"`
+	TotalDepositTokenXUsd    string `json:"totalDepositTokenXUsd"`
+	TotalDepositTokenXSol    string `json:"totalDepositTokenXSol"`
+	TotalWithdrawalTokenX    string `json:"totalWithdrawalTokenX"`
+	TotalWithdrawalTokenXUsd string `json:"totalWithdrawalTokenXUsd"`
+	TotalWithdrawalTokenXSol string `json:"totalWithdrawalTokenXSol"`
+	TotalFeeTokenX           string `json:"totalFeeTokenX"`
+	TotalFeeTokenXUsd        string `json:"totalFeeTokenXUsd"`
+	TotalFeeTokenXSol        string `json:"totalFeeTokenXSol"`
+	TotalDepositTokenY       string `json:"totalDepositTokenY"`
+	TotalDepositTokenYUsd    string `json:"totalDepositTokenYUsd"`
+	TotalDepositTokenYSol    string `json:"totalDepositTokenYSol"`
+	TotalWithdrawalTokenY    string `json:"totalWithdrawalTokenY"`
+	TotalWithdrawalTokenYUsd string `json:"totalWithdrawalTokenYUsd"`
+	TotalWithdrawalTokenYSol string `json:"totalWithdrawalTokenYSol"`
+	TotalFeeTokenY           string `json:"totalFeeTokenY"`
+	TotalFeeTokenYUsd        string `json:"totalFeeTokenYUsd"`
+	TotalFeeTokenYSol        string `json:"totalFeeTokenYSol"`
 }
 
 // PortfolioResponse represents response for closed portfolio.
@@ -185,33 +185,33 @@ type PortfolioResponse struct {
 
 // PoolOpenPortfolioItem represents open portfolio details for a single pool.
 type PoolOpenPortfolioItem struct {
-	Balances           string   `json:"balances"`
-	BalancesSol        *string  `json:"balancesSol,omitempty"`
-	BaseFee            float64  `json:"baseFee"`
-	BinStep            int32    `json:"binStep"`
-	CollectFeeMode     int32    `json:"collectFeeMode"`
-	FeePerTvl24h       string   `json:"feePerTvl24h"`
-	ListPositions      []string `json:"listPositions"`
-	OpenPositionCount  int64    `json:"openPositionCount"`
-	OutOfRange         *bool    `json:"outOfRange,omitempty"`
-	Pnl                string   `json:"pnl"`
-	PnlPctChange       string   `json:"pnlPctChange"`
-	PnlSol             *string  `json:"pnlSol,omitempty"`
-	PnlSolPctChange    *string  `json:"pnlSolPctChange,omitempty"`
-	PoolAddress        string   `json:"poolAddress"`
+	Balances            string   `json:"balances"`
+	BalancesSol         *string  `json:"balancesSol,omitempty"`
+	BaseFee             float64  `json:"baseFee"`
+	BinStep             int32    `json:"binStep"`
+	CollectFeeMode      int32    `json:"collectFeeMode"`
+	FeePerTvl24h        string   `json:"feePerTvl24h"`
+	ListPositions       []string `json:"listPositions"`
+	OpenPositionCount   int64    `json:"openPositionCount"`
+	OutOfRange          *bool    `json:"outOfRange,omitempty"`
+	Pnl                 string   `json:"pnl"`
+	PnlPctChange        string   `json:"pnlPctChange"`
+	PnlSol              *string  `json:"pnlSol,omitempty"`
+	PnlSolPctChange     *string  `json:"pnlSolPctChange,omitempty"`
+	PoolAddress         string   `json:"poolAddress"`
 	PositionsOutOfRange int64    `json:"positionsOutOfRange"`
-	RewardX            *string  `json:"rewardX,omitempty"`
-	RewardY            *string  `json:"rewardY,omitempty"`
-	TokenX             string   `json:"tokenX"`
-	TokenXIcon         string   `json:"tokenXIcon"`
-	TokenXMint         string   `json:"tokenXMint"`
-	TokenY             string   `json:"tokenY"`
-	TokenYIcon         string   `json:"tokenYIcon"`
-	TokenYMint         string   `json:"tokenYMint"`
-	TotalDeposit       string   `json:"totalDeposit"`
-	TotalDepositSol    *string  `json:"totalDepositSol,omitempty"`
-	UnclaimedFees      string   `json:"unclaimedFees"`
-	UnclaimedFeesSol   *string  `json:"unclaimedFeesSol,omitempty"`
+	RewardX             *string  `json:"rewardX,omitempty"`
+	RewardY             *string  `json:"rewardY,omitempty"`
+	TokenX              string   `json:"tokenX"`
+	TokenXIcon          string   `json:"tokenXIcon"`
+	TokenXMint          string   `json:"tokenXMint"`
+	TokenY              string   `json:"tokenY"`
+	TokenYIcon          string   `json:"tokenYIcon"`
+	TokenYMint          string   `json:"tokenYMint"`
+	TotalDeposit        string   `json:"totalDeposit"`
+	TotalDepositSol     *string  `json:"totalDepositSol,omitempty"`
+	UnclaimedFees       string   `json:"unclaimedFees"`
+	UnclaimedFeesSol    *string  `json:"unclaimedFeesSol,omitempty"`
 }
 
 // OpenPortfolioResponse represents open portfolio details.
@@ -312,9 +312,9 @@ type DailyMetricResponse struct {
 
 // ProtocolMetricsResponse represents protocol global metrics.
 type ProtocolMetricsResponse struct {
-	Tvl           float64 `json:"tvl"`
-	Volume24h     float64 `json:"volume_24h"`
-	Fees24h       float64 `json:"fees_24h"`
+	Tvl            float64 `json:"tvl"`
+	Volume24h      float64 `json:"volume_24h"`
+	Fees24h        float64 `json:"fees_24h"`
 	TradingFees24h float64 `json:"trading_fees_24h"`
 }
 
@@ -366,7 +366,7 @@ type PaginationResponse_OpenLimitOrderPoolSummary struct {
 type ClosedLimitOrderPoolSummary struct {
 	Pool                LimitOrderPoolDetails `json:"pool"`
 	TotalOrders         int64                 `json:"total_orders"`
-	FullyFilledOrders  int64                 `json:"fully_filled_orders"`
+	FullyFilledOrders   int64                 `json:"fully_filled_orders"`
 	FilledPct           string                `json:"filled_pct"`
 	MinLimitPrice       string                `json:"min_limit_price"`
 	MaxLimitPrice       string                `json:"max_limit_price"`
@@ -378,27 +378,27 @@ type ClosedLimitOrderPoolSummary struct {
 	TotalDepositYSol    string                `json:"total_deposit_y_sol"`
 	TotalDepositUsd     string                `json:"total_deposit_usd"`
 	TotalDepositSol     string                `json:"total_deposit_sol"`
-	TotalWithdrawalX   string                `json:"total_withdrawal_x"`
-	TotalWithdrawalY   string                `json:"total_withdrawal_y"`
+	TotalWithdrawalX    string                `json:"total_withdrawal_x"`
+	TotalWithdrawalY    string                `json:"total_withdrawal_y"`
 	TotalWithdrawalXUsd string                `json:"total_withdrawal_x_usd"`
 	TotalWithdrawalXSol string                `json:"total_withdrawal_x_sol"`
 	TotalWithdrawalYUsd string                `json:"total_withdrawal_y_usd"`
 	TotalWithdrawalYSol string                `json:"total_withdrawal_y_sol"`
 	TotalWithdrawalUsd  string                `json:"total_withdrawal_usd"`
 	TotalWithdrawalSol  string                `json:"total_withdrawal_sol"`
-	TotalBonusX        string                `json:"total_bonus_x"`
-	TotalBonusY        string                `json:"total_bonus_y"`
-	TotalBonusXUsd     string                `json:"total_bonus_x_usd"`
-	TotalBonusXSol     string                `json:"total_bonus_x_sol"`
-	TotalBonusYUsd     string                `json:"total_bonus_y_usd"`
-	TotalBonusYSol     string                `json:"total_bonus_y_sol"`
-	TotalBonusUsd      string                `json:"total_bonus_usd"`
-	TotalBonusSol      string                `json:"total_bonus_sol"`
-	RealizedPnlUsd     string                `json:"realized_pnl_usd"`
-	RealizedPnlSol     string                `json:"realized_pnl_sol"`
-	RealizedPnlPctUsd  string                `json:"realized_pnl_pct_usd"`
-	RealizedPnlPctSol  string                `json:"realized_pnl_pct_sol"`
-	LastClosedAt       int64                 `json:"last_closed_at"`
+	TotalBonusX         string                `json:"total_bonus_x"`
+	TotalBonusY         string                `json:"total_bonus_y"`
+	TotalBonusXUsd      string                `json:"total_bonus_x_usd"`
+	TotalBonusXSol      string                `json:"total_bonus_x_sol"`
+	TotalBonusYUsd      string                `json:"total_bonus_y_usd"`
+	TotalBonusYSol      string                `json:"total_bonus_y_sol"`
+	TotalBonusUsd       string                `json:"total_bonus_usd"`
+	TotalBonusSol       string                `json:"total_bonus_sol"`
+	RealizedPnlUsd      string                `json:"realized_pnl_usd"`
+	RealizedPnlSol      string                `json:"realized_pnl_sol"`
+	RealizedPnlPctUsd   string                `json:"realized_pnl_pct_usd"`
+	RealizedPnlPctSol   string                `json:"realized_pnl_pct_sol"`
+	LastClosedAt        int64                 `json:"last_closed_at"`
 }
 
 // PaginationResponse_ClosedLimitOrderPoolSummary represents closed limit order pools response.
@@ -463,49 +463,49 @@ type BonusClaimedResponse struct {
 
 // ClosedLimitOrderDetail represents per-order lifecycle details for a closed order.
 type ClosedLimitOrderDetail struct {
-	LimitOrderAddress      string  `json:"limit_order_address"`
-	UserAddress            string  `json:"user_address"`
-	IsAskSide              bool    `json:"is_ask_side"`
-	LowerPoolPrice         float64 `json:"lower_pool_price"`
-	UpperPoolPrice         float64 `json:"upper_pool_price"`
-	InputToken             string  `json:"input_token"`
-	InputTokenMint         string  `json:"input_token_mint"`
-	OutputToken            string  `json:"output_token"`
-	OutputTokenMint        string  `json:"output_token_mint"`
-	TotalDepositX          string  `json:"total_deposit_x"`
-	TotalDepositY          string  `json:"total_deposit_y"`
-	TotalDepositUsd        string  `json:"total_deposit_usd"`
-	TotalDepositSol        string  `json:"total_deposit_sol"`
-	OutputAmountExpected   string  `json:"output_amount_expected"`
-	TotalWithdrawalX       string  `json:"total_withdrawal_x"`
-	TotalWithdrawalY       string  `json:"total_withdrawal_y"`
-	TotalWithdrawalXUsd    string  `json:"total_withdrawal_x_usd"`
-	TotalWithdrawalXSol    string  `json:"total_withdrawal_x_sol"`
-	TotalWithdrawalYUsd    string  `json:"total_withdrawal_y_usd"`
-	TotalWithdrawalYSol    string  `json:"total_withdrawal_y_sol"`
-	TotalWithdrawalUsd     string  `json:"total_withdrawal_usd"`
-	TotalWithdrawalSol     string  `json:"total_withdrawal_sol"`
-	TotalBonusX            string  `json:"total_bonus_x"`
-	TotalBonusY            string  `json:"total_bonus_y"`
-	TotalBonusXUsd         string  `json:"total_bonus_x_usd"`
-	TotalBonusXSol         string  `json:"total_bonus_x_sol"`
-	TotalBonusYUsd         string  `json:"total_bonus_y_usd"`
-	TotalBonusYSol         string  `json:"total_bonus_y_sol"`
-	TotalBonusUsd          string  `json:"total_bonus_usd"`
-	TotalBonusSol          string  `json:"total_bonus_sol"`
-	RealizedPnlUsd         string  `json:"realized_pnl_usd"`
-	RealizedPnlSol         string  `json:"realized_pnl_sol"`
-	RealizedPnlPctUsd      string  `json:"realized_pnl_pct_usd"`
-	RealizedPnlPctSol      string  `json:"realized_pnl_pct_sol"`
-	FilledPct              string  `json:"filled_pct"`
-	FilledInputAmount      string  `json:"filled_input_amount"`
-	ReceivedOutputAmount   string  `json:"received_output_amount"`
-	OpenedAt               int64   `json:"opened_at"`
-	OpenedAtSignature      string  `json:"opened_at_signature"`
-	OpenedAtSlot           int64   `json:"opened_at_slot"`
-	LastClosedAt           int64   `json:"last_closed_at"`
-	TerminalSignature      string  `json:"terminal_signature"`
-	TerminalSlot           int64   `json:"terminal_slot"`
+	LimitOrderAddress    string  `json:"limit_order_address"`
+	UserAddress          string  `json:"user_address"`
+	IsAskSide            bool    `json:"is_ask_side"`
+	LowerPoolPrice       float64 `json:"lower_pool_price"`
+	UpperPoolPrice       float64 `json:"upper_pool_price"`
+	InputToken           string  `json:"input_token"`
+	InputTokenMint       string  `json:"input_token_mint"`
+	OutputToken          string  `json:"output_token"`
+	OutputTokenMint      string  `json:"output_token_mint"`
+	TotalDepositX        string  `json:"total_deposit_x"`
+	TotalDepositY        string  `json:"total_deposit_y"`
+	TotalDepositUsd      string  `json:"total_deposit_usd"`
+	TotalDepositSol      string  `json:"total_deposit_sol"`
+	OutputAmountExpected string  `json:"output_amount_expected"`
+	TotalWithdrawalX     string  `json:"total_withdrawal_x"`
+	TotalWithdrawalY     string  `json:"total_withdrawal_y"`
+	TotalWithdrawalXUsd  string  `json:"total_withdrawal_x_usd"`
+	TotalWithdrawalXSol  string  `json:"total_withdrawal_x_sol"`
+	TotalWithdrawalYUsd  string  `json:"total_withdrawal_y_usd"`
+	TotalWithdrawalYSol  string  `json:"total_withdrawal_y_sol"`
+	TotalWithdrawalUsd   string  `json:"total_withdrawal_usd"`
+	TotalWithdrawalSol   string  `json:"total_withdrawal_sol"`
+	TotalBonusX          string  `json:"total_bonus_x"`
+	TotalBonusY          string  `json:"total_bonus_y"`
+	TotalBonusXUsd       string  `json:"total_bonus_x_usd"`
+	TotalBonusXSol       string  `json:"total_bonus_x_sol"`
+	TotalBonusYUsd       string  `json:"total_bonus_y_usd"`
+	TotalBonusYSol       string  `json:"total_bonus_y_sol"`
+	TotalBonusUsd        string  `json:"total_bonus_usd"`
+	TotalBonusSol        string  `json:"total_bonus_sol"`
+	RealizedPnlUsd       string  `json:"realized_pnl_usd"`
+	RealizedPnlSol       string  `json:"realized_pnl_sol"`
+	RealizedPnlPctUsd    string  `json:"realized_pnl_pct_usd"`
+	RealizedPnlPctSol    string  `json:"realized_pnl_pct_sol"`
+	FilledPct            string  `json:"filled_pct"`
+	FilledInputAmount    string  `json:"filled_input_amount"`
+	ReceivedOutputAmount string  `json:"received_output_amount"`
+	OpenedAt             int64   `json:"opened_at"`
+	OpenedAtSignature    string  `json:"opened_at_signature"`
+	OpenedAtSlot         int64   `json:"opened_at_slot"`
+	LastClosedAt         int64   `json:"last_closed_at"`
+	TerminalSignature    string  `json:"terminal_signature"`
+	TerminalSlot         int64   `json:"terminal_slot"`
 }
 
 // ClosedLimitOrdersForPoolResponse represents response for closed limit orders in a pool.
@@ -577,4 +577,3 @@ type OpenLimitOrdersForPoolResponse struct {
 	PageSize           int64                  `json:"page_size"`
 	Data               []OpenLimitOrderDetail `json:"data"`
 }
-

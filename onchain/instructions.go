@@ -18,22 +18,22 @@ func DeriveEventAuthority() (solana.PublicKey, uint8, error) {
 
 // SwapParams defines parameters to build a Swap instruction.
 type SwapParams struct {
-	LbPair                   solana.PublicKey
-	ReserveX                 solana.PublicKey
-	ReserveY                 solana.PublicKey
-	UserTokenIn              solana.PublicKey
-	UserTokenOut             solana.PublicKey
-	TokenXMint               solana.PublicKey
-	TokenYMint               solana.PublicKey
-	Oracle                   solana.PublicKey
-	BinArrayBitmapExtension  *solana.PublicKey
-	HostFeeIn                *solana.PublicKey
-	User                     solana.PublicKey
-	TokenXProgram            solana.PublicKey
-	TokenYProgram            solana.PublicKey
-	BinArrays                []solana.PublicKey
-	AmountIn                 uint64
-	MinAmountOut             uint64
+	LbPair                  solana.PublicKey
+	ReserveX                solana.PublicKey
+	ReserveY                solana.PublicKey
+	UserTokenIn             solana.PublicKey
+	UserTokenOut            solana.PublicKey
+	TokenXMint              solana.PublicKey
+	TokenYMint              solana.PublicKey
+	Oracle                  solana.PublicKey
+	BinArrayBitmapExtension *solana.PublicKey
+	HostFeeIn               *solana.PublicKey
+	User                    solana.PublicKey
+	TokenXProgram           solana.PublicKey
+	TokenYProgram           solana.PublicKey
+	BinArrays               []solana.PublicKey
+	AmountIn                uint64
+	MinAmountOut            uint64
 }
 
 // NewSwapInstruction builds a swap2 instruction matching the DLMM program layout.
@@ -57,17 +57,17 @@ func NewSwapInstruction(params SwapParams) (*solana.GenericInstruction, error) {
 
 	// Define accounts list for swap2
 	accounts := []*solana.AccountMeta{
-		solana.NewAccountMeta(params.LbPair, true, false), // lb_pair
-		solana.NewAccountMeta(bitmapExt, true, false),      // bin_array_bitmap_extension
-		solana.NewAccountMeta(params.ReserveX, true, false), // reserve_x
-		solana.NewAccountMeta(params.ReserveY, true, false), // reserve_y
-		solana.NewAccountMeta(params.UserTokenIn, true, false), // user_token_in
-		solana.NewAccountMeta(params.UserTokenOut, true, false), // user_token_out
-		solana.NewAccountMeta(params.TokenXMint, false, false), // token_x_mint
-		solana.NewAccountMeta(params.TokenYMint, false, false), // token_y_mint
-		solana.NewAccountMeta(params.Oracle, true, false), // oracle
-		solana.NewAccountMeta(hostFeeIn, true, false),      // host_fee_in
-		solana.NewAccountMeta(params.User, false, true),   // user
+		solana.NewAccountMeta(params.LbPair, true, false),         // lb_pair
+		solana.NewAccountMeta(bitmapExt, true, false),             // bin_array_bitmap_extension
+		solana.NewAccountMeta(params.ReserveX, true, false),       // reserve_x
+		solana.NewAccountMeta(params.ReserveY, true, false),       // reserve_y
+		solana.NewAccountMeta(params.UserTokenIn, true, false),    // user_token_in
+		solana.NewAccountMeta(params.UserTokenOut, true, false),   // user_token_out
+		solana.NewAccountMeta(params.TokenXMint, false, false),    // token_x_mint
+		solana.NewAccountMeta(params.TokenYMint, false, false),    // token_y_mint
+		solana.NewAccountMeta(params.Oracle, true, false),         // oracle
+		solana.NewAccountMeta(hostFeeIn, true, false),             // host_fee_in
+		solana.NewAccountMeta(params.User, false, true),           // user
 		solana.NewAccountMeta(params.TokenXProgram, false, false), // token_x_program
 		solana.NewAccountMeta(params.TokenYProgram, false, false), // token_y_program
 		solana.NewAccountMeta(memoProgram, false, false),          // memo_program
