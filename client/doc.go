@@ -1,8 +1,19 @@
-// Package client provides a REST API client for Meteora's DLMM (Dynamic Liquidity Market Maker).
+// Package client provides a REST API client for Meteora's DLMM architecture.
 //
-// It allows developers to easily fetch pool information, token pairs, statistics,
-// and other off-chain data provided by the Meteora DLMM API.
+// It allows users to interact with Meteora's off-chain APIs to fetch pool data,
+// historical analytics (OHLCV, Volume), portfolio positions, and daily protocol metrics.
 //
-// For interacting directly with the Solana blockchain (e.g., executing swaps,
-// calculating quotes, managing liquidity bins), use the "onchain" package.
+// The client supports optional configuration via the Functional Options pattern, 
+// such as injecting a custom *http.Client for timeouts or proxying.
+//
+// # Quick Start
+//
+//	apiClient := client.NewClient("") // Uses default mainnet endpoint
+//	ctx := context.Background()
+//
+//	pool, err := apiClient.GetPool(ctx, "5rCf1DM8LjKTw4YqhnoLcngyZYeNnQqztScTogYHAS6")
+//	if err != nil {
+//		log.Fatal(err)
+//	}
+//	fmt.Println("Pool TVL:", pool.Tvl)
 package client
