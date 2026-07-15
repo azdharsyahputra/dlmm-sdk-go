@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/url"
 	"strconv"
@@ -16,7 +17,7 @@ type GetPositionHistoricalEventsParams struct {
 // GetPositionHistoricalEvents retrieves the historical events for a position.
 func (c *Client) GetPositionHistoricalEvents(ctx context.Context, address string, params *GetPositionHistoricalEventsParams) (*GetPositionHistoricalEventsResponse, error) {
 	if address == "" {
-		return nil, fmt.Errorf("position address cannot be empty")
+		return nil, errors.New("position address cannot be empty")
 	}
 
 	q := url.Values{}
@@ -48,7 +49,7 @@ type GetPoolPositionPnLParams struct {
 // GetPoolPositionPnL retrieves position PnL for a wallet in a specific pool.
 func (c *Client) GetPoolPositionPnL(ctx context.Context, poolAddress string, params *GetPoolPositionPnLParams) (*GetPoolPositionPnLResponse, error) {
 	if poolAddress == "" {
-		return nil, fmt.Errorf("pool address cannot be empty")
+		return nil, errors.New("pool address cannot be empty")
 	}
 
 	q := url.Values{}

@@ -15,7 +15,7 @@ type GetPortfolioParams struct {
 }
 
 // GetPortfolio retrieves user portfolio with all pools containing closed positions.
-func (c *Client) GetPortfolio(ctx context.Context, params *GetPortfolioParams) (*PortfolioResponse, error) {
+func (c *Client) GetPortfolio(ctx context.Context, user string, params *GetPortfolioParams) (*PortfolioResponse, error) {
 	q := url.Values{}
 	q.Set("user", params.User)
 	if params.Page != nil {

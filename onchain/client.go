@@ -28,18 +28,18 @@ func (c *Client) GetRPCClient() *rpc.Client {
 	return c.rpcClient
 }
 
-// GetLbPair fetches and deserializes the state of a DLMM pool (LbPair).
-func (c *Client) GetLbPair(ctx context.Context, address solana.PublicKey) (*LbPair, error) {
+// GetLBPair fetches and deserializes the state of a DLMM pool (LBPair).
+func (c *Client) GetLBPair(ctx context.Context, address solana.PublicKey) (*LBPair, error) {
 	resp, err := c.rpcClient.GetAccountInfo(ctx, address)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get LbPair account info: %w", err)
+		return nil, fmt.Errorf("failed to get LBPair account info: %w", err)
 	}
 	if resp == nil || resp.Value == nil {
-		return nil, fmt.Errorf("LbPair account not found")
+		return nil, fmt.Errorf("lbPair account not found")
 	}
 
-	var pair LbPair
-	if err := DeserializeAccount(resp.Value.Data.GetBinary(), &pair); err != nil {
+	var pair LBPair
+	if err := DecodeLBPair(resp.Value.Data.GetBinary(), &pair); err != nil {
 		return nil, err
 	}
 	return &pair, nil
@@ -56,7 +56,7 @@ func (c *Client) GetBinArray(ctx context.Context, address solana.PublicKey) (*Bi
 	}
 
 	var binArray BinArray
-	if err := DeserializeAccount(resp.Value.Data.GetBinary(), &binArray); err != nil {
+	if err := DecodeLBPair(resp.Value.Data.GetBinary(), &binArray); err != nil {
 		return nil, err
 	}
 	return &binArray, nil
@@ -71,13 +71,13 @@ func (c *Client) GetBinArrayByIndex(ctx context.Context, lbPair solana.PublicKey
 	return c.GetBinArray(ctx, pubkey)
 }
 
-// GetBinFromBinArrayHelper extracts a specific bin by bin ID from a deserialized BinArray.
-func GetBinFromBinArrayHelper(binId int32, binArray *BinArray) (*Bin, error) {
-	lowerBinId, upperBinId := GetBinArrayLowerUpperBinId(binArray.Index)
-	if binId < lowerBinId || binId > upperBinId {
-		return nil, fmt.Errorf("binId %d is out of range for BinArray index %d [%d, %d]", binId, binArray.Index, lowerBinId, upperBinId)
+// GetBin extracts a specific bin by bin ID from a deserialized BinArray.
+func (binArray *BinArray) GetBin(binID int32) (*Bin, error) {
+	lowerBinID, upperBinID := GetBinArrayLowerUpperBinID(binArray.Index)
+	if binID < lowerBinID || binID > upperBinID {
+		return nil, fmt.Errorf("binID %d is out of range for BinArray index %d [%d, %d]", binID, binArray.Index, lowerBinID, upperBinID)
 	}
-	idx := binId - lowerBinId
+	idx := binID - lowerBinID
 	return &binArray.Bins[idx], nil
 }
 
@@ -92,7 +92,7 @@ func (c *Client) GetPositionV2(ctx context.Context, address solana.PublicKey) (*
 	}
 
 	var pos PositionV2
-	if err := DeserializeAccount(resp.Value.Data.GetBinary(), &pos); err != nil {
+	if err := DecodeLBPair(resp.Value.Data.GetBinary(), &pos); err != nil {
 		return nil, err
 	}
 	return &pos, nil
@@ -109,7 +109,7 @@ func (c *Client) GetBinArrayBitmapExtension(ctx context.Context, address solana.
 	}
 
 	var ext BinArrayBitmapExtension
-	if err := DeserializeAccount(resp.Value.Data.GetBinary(), &ext); err != nil {
+	if err := DecodeLBPair(resp.Value.Data.GetBinary(), &ext); err != nil {
 		return nil, err
 	}
 	return &ext, nil

@@ -17,26 +17,26 @@ func TestSwapQuoteSOLUSDC(t *testing.T) {
 	// SOL-USDC pool address on mainnet
 	poolAddr := solana.MustPublicKeyFromBase58("5rCf1DM8LjKTw4YqhnoLcngyZYeNnQqztScTogYHAS6")
 
-	// 1. Fetch LbPair
-	pair, err := c.GetLbPair(ctx, poolAddr)
+	// 1. Fetch LBPair
+	pair, err := c.GetLBPair(ctx, poolAddr)
 	if err != nil {
-		t.Fatalf("Failed to fetch LbPair: %v", err)
+		t.Fatalf("Failed to fetch LBPair: %v", err)
 	}
 
-	t.Logf("SOL-USDC Pool Active Bin ID: %d", pair.ActiveId)
+	t.Logf("SOL-USDC Pool Active Bin ID: %d", pair.ActiveID)
 
 	// 2. Fetch the active BinArray and adjacent ones
-	activeIdx := onchain.BinIdToBinArrayIndex(pair.ActiveId)
+	activeIdx := onchain.BinIDToBinArrayIndex(pair.ActiveID)
 	t.Logf("Active BinArray Index: %d", activeIdx)
 
 	// We will fetch active index, active-1, and active+1 to cover price movement in both directions
 	indices := []int64{activeIdx - 1, activeIdx, activeIdx + 1}
-	var binArrays []onchain.BinArray
+	var binArrays []*onchain.BinArray
 
 	for _, idx := range indices {
 		ba, err := c.GetBinArrayByIndex(ctx, poolAddr, idx)
 		if err == nil {
-			binArrays = append(binArrays, *ba)
+			binArrays = append(binArrays, ba)
 			t.Logf("Fetched BinArray index %d", idx)
 		} else {
 			t.Logf("Warning: Could not fetch BinArray index %d (might not be initialized): %v", idx, err)
@@ -57,7 +57,7 @@ func TestSwapQuoteSOLUSDC(t *testing.T) {
 	t.Logf("Min Out After Slippage (USDC units): %s", quoteY.MinOutAmount.String())
 	t.Logf("Fee Paid (lamports): %s", quoteY.Fee.String())
 	t.Logf("Price Impact: %f%%", quoteY.PriceImpact)
-	t.Logf("Starting Active Bin ID: %d, Final Active Bin ID: %d", pair.ActiveId, quoteY.LastFilledActiveBinId)
+	t.Logf("Starting Active Bin ID: %d, Final Active Bin ID: %d", pair.ActiveID, quoteY.LastFilledActiveBinID)
 
 	// 4. Simulating Swap Exact-In: 100 USDC -> SOL (swapForY = false)
 	// Swap exact in: 100 USDC -> SOL
@@ -73,7 +73,7 @@ func TestSwapQuoteSOLUSDC(t *testing.T) {
 	t.Logf("Min Out After Slippage (SOL lamports): %s", quoteX.MinOutAmount.String())
 	t.Logf("Fee Paid (USDC units): %s", quoteX.Fee.String())
 	t.Logf("Price Impact: %f%%", quoteX.PriceImpact)
-	t.Logf("Starting Active Bin ID: %d, Final Active Bin ID: %d", pair.ActiveId, quoteX.LastFilledActiveBinId)
+	t.Logf("Starting Active Bin ID: %d, Final Active Bin ID: %d", pair.ActiveID, quoteX.LastFilledActiveBinID)
 }
 
 func BenchmarkComputeSwapQuote(b *testing.B) {
@@ -81,19 +81,19 @@ func BenchmarkComputeSwapQuote(b *testing.B) {
 	ctx := context.Background()
 	poolAddr := solana.MustPublicKeyFromBase58("5rCf1DM8LjKTw4YqhnoLcngyZYeNnQqztScTogYHAS6")
 
-	pair, err := c.GetLbPair(ctx, poolAddr)
+	pair, err := c.GetLBPair(ctx, poolAddr)
 	if err != nil {
-		b.Fatalf("Failed to fetch LbPair: %v", err)
+		b.Fatalf("Failed to fetch LBPair: %v", err)
 	}
 
-	activeIdx := onchain.BinIdToBinArrayIndex(pair.ActiveId)
+	activeIdx := onchain.BinIDToBinArrayIndex(pair.ActiveID)
 	indices := []int64{activeIdx - 1, activeIdx, activeIdx + 1}
-	var binArrays []onchain.BinArray
+	var binArrays []*onchain.BinArray
 
 	for _, idx := range indices {
 		ba, err := c.GetBinArrayByIndex(ctx, poolAddr, idx)
 		if err == nil {
-			binArrays = append(binArrays, *ba)
+			binArrays = append(binArrays, ba)
 		}
 	}
 

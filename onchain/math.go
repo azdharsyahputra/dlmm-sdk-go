@@ -81,61 +81,61 @@ func GetAmountOut(price, inAmount *big.Int, swapForY bool, roundUp bool) *big.In
 	return ShlDiv(inAmount, price, 64, roundUp)
 }
 
-// BinIdToPriceDecimal calculates the price of a bin in lamport relative price with arbitrary precision.
-// Price = (1 + binStep/10000) ^ binId
-func BinIdToPriceDecimal(binId int32, binStep uint16) decimal.Decimal {
+// BinIDToPriceDecimal calculates the price of a bin in lamport relative price with arbitrary precision.
+// Price = (1 + binStep/10000) ^ binID
+func BinIDToPriceDecimal(binID int32, binStep uint16) decimal.Decimal {
 	binStepDec := decimal.NewFromInt(int64(binStep))
 	bpsDec := decimal.NewFromInt(10000)
 	base := decimal.NewFromInt(1).Add(binStepDec.Div(bpsDec))
-	return base.Pow(decimal.NewFromInt(int64(binId)))
+	return base.Pow(decimal.NewFromInt(int64(binID)))
 }
 
-// BinIdToPrice calculates the price of a bin in lamport relative price.
-func BinIdToPrice(binId int32, binStep uint16) float64 {
-	val := BinIdToPriceDecimal(binId, binStep)
+// BinIDToPrice calculates the price of a bin in lamport relative price.
+func BinIDToPrice(binID int32, binStep uint16) float64 {
+	val := BinIDToPriceDecimal(binID, binStep)
 	f, _ := val.Float64()
 	return f
 }
 
-// PriceToBinIdDecimal calculates the bin ID closest to a given lamport price represented as decimal.
-func PriceToBinIdDecimal(price decimal.Decimal, binStep uint16) int32 {
+// PriceToBinIDDecimal calculates the bin ID closest to a given lamport price represented as decimal.
+func PriceToBinIDDecimal(price decimal.Decimal, binStep uint16) int32 {
 	priceF, _ := price.Float64()
 	base := 1.0 + float64(binStep)/10000.0
-	binId := math.Log(priceF) / math.Log(base)
-	return int32(math.Round(binId))
+	binID := math.Log(priceF) / math.Log(base)
+	return int32(math.Round(binID))
 }
 
-// PriceToBinId calculates the bin ID closest to a given lamport price.
-func PriceToBinId(price float64, binStep uint16) int32 {
-	return PriceToBinIdDecimal(decimal.NewFromFloat(price), binStep)
+// PriceToBinID calculates the bin ID closest to a given lamport price.
+func PriceToBinID(price float64, binStep uint16) int32 {
+	return PriceToBinIDDecimal(decimal.NewFromFloat(price), binStep)
 }
 
-// BinIdToTokenPriceDecimal calculates the user-facing price (token Y per token X) adjusting for decimals with arbitrary precision.
-func BinIdToTokenPriceDecimal(binId int32, binStep uint16, decimalsX int32, decimalsY int32) decimal.Decimal {
-	pricePerLamport := BinIdToPriceDecimal(binId, binStep)
+// BinIDToTokenPriceDecimal calculates the user-facing price (token Y per token X) adjusting for decimals with arbitrary precision.
+func BinIDToTokenPriceDecimal(binID int32, binStep uint16, decimalsX int32, decimalsY int32) decimal.Decimal {
+	pricePerLamport := BinIDToPriceDecimal(binID, binStep)
 	diff := int64(decimalsX - decimalsY)
 	multiplier := decimal.NewFromInt(10).Pow(decimal.NewFromInt(diff))
 	return pricePerLamport.Mul(multiplier)
 }
 
-// BinIdToTokenPrice calculates the user-facing price (token Y per token X) adjusting for decimals.
-func BinIdToTokenPrice(binId int32, binStep uint16, decimalsX int32, decimalsY int32) float64 {
-	val := BinIdToTokenPriceDecimal(binId, binStep, decimalsX, decimalsY)
+// BinIDToTokenPrice calculates the user-facing price (token Y per token X) adjusting for decimals.
+func BinIDToTokenPrice(binID int32, binStep uint16, decimalsX int32, decimalsY int32) float64 {
+	val := BinIDToTokenPriceDecimal(binID, binStep, decimalsX, decimalsY)
 	f, _ := val.Float64()
 	return f
 }
 
-// TokenPriceToBinIdDecimal calculates the bin ID for a given user-facing token price represented as decimal.
-func TokenPriceToBinIdDecimal(tokenPrice decimal.Decimal, binStep uint16, decimalsX int32, decimalsY int32) int32 {
+// TokenPriceToBinIDDecimal calculates the bin ID for a given user-facing token price represented as decimal.
+func TokenPriceToBinIDDecimal(tokenPrice decimal.Decimal, binStep uint16, decimalsX int32, decimalsY int32) int32 {
 	diff := int64(decimalsX - decimalsY)
 	multiplier := decimal.NewFromInt(10).Pow(decimal.NewFromInt(diff))
 	pricePerLamport := tokenPrice.Div(multiplier)
-	return PriceToBinIdDecimal(pricePerLamport, binStep)
+	return PriceToBinIDDecimal(pricePerLamport, binStep)
 }
 
-// TokenPriceToBinId calculates the bin ID for a given user-facing token price.
-func TokenPriceToBinId(tokenPrice float64, binStep uint16, decimalsX int32, decimalsY int32) int32 {
-	return TokenPriceToBinIdDecimal(decimal.NewFromFloat(tokenPrice), binStep, decimalsX, decimalsY)
+// TokenPriceToBinID calculates the bin ID for a given user-facing token price.
+func TokenPriceToBinID(tokenPrice float64, binStep uint16, decimalsX int32, decimalsY int32) int32 {
+	return TokenPriceToBinIDDecimal(decimal.NewFromFloat(tokenPrice), binStep, decimalsX, decimalsY)
 }
 
 // GetBaseFee calculates the base swap fee numerator.

@@ -18,7 +18,7 @@ func DeriveEventAuthority() (solana.PublicKey, uint8, error) {
 
 // SwapParams defines parameters to build a Swap instruction.
 type SwapParams struct {
-	LbPair                  solana.PublicKey
+	LBPair                  solana.PublicKey
 	ReserveX                solana.PublicKey
 	ReserveY                solana.PublicKey
 	UserTokenIn             solana.PublicKey
@@ -57,7 +57,7 @@ func NewSwapInstruction(params SwapParams) (*solana.GenericInstruction, error) {
 
 	// Define accounts list for swap2
 	accounts := []*solana.AccountMeta{
-		solana.NewAccountMeta(params.LbPair, true, false),         // lb_pair
+		solana.NewAccountMeta(params.LBPair, true, false),         // lb_pair
 		solana.NewAccountMeta(bitmapExt, true, false),             // bin_array_bitmap_extension
 		solana.NewAccountMeta(params.ReserveX, true, false),       // reserve_x
 		solana.NewAccountMeta(params.ReserveY, true, false),       // reserve_y
@@ -104,7 +104,7 @@ func NewSwapInstruction(params SwapParams) (*solana.GenericInstruction, error) {
 
 // ClaimFeeParams defines parameters to build a ClaimFee2 instruction.
 type ClaimFeeParams struct {
-	LbPair        solana.PublicKey
+	LBPair        solana.PublicKey
 	Position      solana.PublicKey
 	Sender        solana.PublicKey
 	ReserveX      solana.PublicKey
@@ -115,8 +115,8 @@ type ClaimFeeParams struct {
 	TokenYMint    solana.PublicKey
 	TokenProgramX solana.PublicKey
 	TokenProgramY solana.PublicKey
-	MinBinId      int32
-	MaxBinId      int32
+	MinBinID      int32
+	MaxBinID      int32
 }
 
 // NewClaimFeeInstruction builds a claim_fee2 instruction.
@@ -129,7 +129,7 @@ func NewClaimFeeInstruction(params ClaimFeeParams) (*solana.GenericInstruction, 
 	memoProgram := solana.MustPublicKeyFromBase58("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr")
 
 	accounts := []*solana.AccountMeta{
-		solana.NewAccountMeta(params.LbPair, true, false),
+		solana.NewAccountMeta(params.LBPair, true, false),
 		solana.NewAccountMeta(params.Position, true, false),
 		solana.NewAccountMeta(params.Sender, false, true), // signer
 		solana.NewAccountMeta(params.ReserveX, true, false),
@@ -150,8 +150,8 @@ func NewClaimFeeInstruction(params ClaimFeeParams) (*solana.GenericInstruction, 
 	discriminator := []byte{112, 191, 101, 171, 28, 144, 127, 187}
 	buf.Write(discriminator)
 
-	binary.Write(buf, binary.LittleEndian, params.MinBinId)
-	binary.Write(buf, binary.LittleEndian, params.MaxBinId)
+	binary.Write(buf, binary.LittleEndian, params.MinBinID)
+	binary.Write(buf, binary.LittleEndian, params.MaxBinID)
 	// empty slices vec
 	buf.Write([]byte{0, 0, 0, 0})
 
@@ -160,7 +160,7 @@ func NewClaimFeeInstruction(params ClaimFeeParams) (*solana.GenericInstruction, 
 
 // ClaimRewardParams defines parameters to build a ClaimReward2 instruction.
 type ClaimRewardParams struct {
-	LbPair           solana.PublicKey
+	LBPair           solana.PublicKey
 	Position         solana.PublicKey
 	Sender           solana.PublicKey
 	RewardVault      solana.PublicKey
@@ -168,8 +168,8 @@ type ClaimRewardParams struct {
 	UserTokenAccount solana.PublicKey
 	TokenProgram     solana.PublicKey
 	RewardIndex      uint64
-	MinBinId         int32
-	MaxBinId         int32
+	MinBinID         int32
+	MaxBinID         int32
 }
 
 // NewClaimRewardInstruction builds a claim_reward2 instruction.
@@ -182,7 +182,7 @@ func NewClaimRewardInstruction(params ClaimRewardParams) (*solana.GenericInstruc
 	memoProgram := solana.MustPublicKeyFromBase58("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr")
 
 	accounts := []*solana.AccountMeta{
-		solana.NewAccountMeta(params.LbPair, true, false),
+		solana.NewAccountMeta(params.LBPair, true, false),
 		solana.NewAccountMeta(params.Position, true, false),
 		solana.NewAccountMeta(params.Sender, false, true), // signer
 		solana.NewAccountMeta(params.RewardVault, true, false),
@@ -200,8 +200,8 @@ func NewClaimRewardInstruction(params ClaimRewardParams) (*solana.GenericInstruc
 	buf.Write(discriminator)
 
 	binary.Write(buf, binary.LittleEndian, params.RewardIndex)
-	binary.Write(buf, binary.LittleEndian, params.MinBinId)
-	binary.Write(buf, binary.LittleEndian, params.MaxBinId)
+	binary.Write(buf, binary.LittleEndian, params.MinBinID)
+	binary.Write(buf, binary.LittleEndian, params.MaxBinID)
 	// empty slices vec
 	buf.Write([]byte{0, 0, 0, 0})
 

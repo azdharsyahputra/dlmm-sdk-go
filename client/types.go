@@ -353,8 +353,8 @@ type OpenLimitOrderPoolSummary struct {
 	UnrealizedPnlPctSol string                `json:"unrealized_pnl_pct_sol"`
 }
 
-// PaginationResponse_OpenLimitOrderPoolSummary represents open limit order pools response.
-type PaginationResponse_OpenLimitOrderPoolSummary struct {
+// OpenLimitOrderPoolSummaryPage represents open limit order pools response.
+type OpenLimitOrderPoolSummaryPage struct {
 	CurrentPage int64                       `json:"current_page"`
 	PageSize    int64                       `json:"page_size"`
 	Pages       int64                       `json:"pages"`
@@ -401,8 +401,8 @@ type ClosedLimitOrderPoolSummary struct {
 	LastClosedAt        int64                 `json:"last_closed_at"`
 }
 
-// PaginationResponse_ClosedLimitOrderPoolSummary represents closed limit order pools response.
-type PaginationResponse_ClosedLimitOrderPoolSummary struct {
+// ClosedLimitOrderPoolSummaryPage represents closed limit order pools response.
+type ClosedLimitOrderPoolSummaryPage struct {
 	CurrentPage int64                         `json:"current_page"`
 	PageSize    int64                         `json:"page_size"`
 	Pages       int64                         `json:"pages"`

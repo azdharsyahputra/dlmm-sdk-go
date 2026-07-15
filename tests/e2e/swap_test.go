@@ -44,7 +44,7 @@ func TestDevnetSwap(t *testing.T) {
 
 	t.Log("3. Fetching Pool from Devnet API")
 	devnetAPI := client.NewClient("https://dlmm.dev.metdev.io")
-	
+
 	page := 1
 	pageSize := 1
 	poolsRes, err := devnetAPI.GetPools(ctx, &client.GetPoolsParams{
@@ -61,23 +61,23 @@ func TestDevnetSwap(t *testing.T) {
 
 	t.Log("4. Building Swap Quote")
 	// For simulation, we assume quote works since we tested it in unit tests.
-	
+
 	t.Log("5. Building Swap Instruction")
 	inst, err := onchain.NewSwapInstruction(onchain.SwapParams{
-		LbPair:            poolPubkey,
-		ReserveX:          solana.NewWallet().PublicKey(), // Mock
-		ReserveY:          solana.NewWallet().PublicKey(), // Mock
-		UserTokenIn:       wallet.PublicKey(),             // Mock
-		UserTokenOut:      wallet.PublicKey(),             // Mock
-		TokenXMint:        solana.NewWallet().PublicKey(), // Mock
-		TokenYMint:        solana.NewWallet().PublicKey(), // Mock
-		Oracle:            solana.NewWallet().PublicKey(), // Mock
-		User:              wallet.PublicKey(),
-		TokenXProgram:     solana.TokenProgramID,
-		TokenYProgram:     solana.TokenProgramID,
-		BinArrays:         []solana.PublicKey{solana.NewWallet().PublicKey()},
-		AmountIn:          1000000,
-		MinAmountOut:      49000,
+		LBPair:        poolPubkey,
+		ReserveX:      solana.NewWallet().PublicKey(), // Mock
+		ReserveY:      solana.NewWallet().PublicKey(), // Mock
+		UserTokenIn:   wallet.PublicKey(),             // Mock
+		UserTokenOut:  wallet.PublicKey(),             // Mock
+		TokenXMint:    solana.NewWallet().PublicKey(), // Mock
+		TokenYMint:    solana.NewWallet().PublicKey(), // Mock
+		Oracle:        solana.NewWallet().PublicKey(), // Mock
+		User:          wallet.PublicKey(),
+		TokenXProgram: solana.TokenProgramID,
+		TokenYProgram: solana.TokenProgramID,
+		BinArrays:     []solana.PublicKey{solana.NewWallet().PublicKey()},
+		AmountIn:      1000000,
+		MinAmountOut:  49000,
 	})
 	if err != nil {
 		t.Fatalf("Failed to build swap instruction: %v", err)

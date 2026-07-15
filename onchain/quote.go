@@ -24,15 +24,15 @@ type SwapQuote struct {
 	Fee                   *big.Int
 	ProtocolFee           *big.Int
 	PriceImpact           float64
-	LastFilledActiveBinId int32
+	LastFilledActiveBinID int32
 	BinArraysPubkey       []solana.PublicKey // Bin array accounts traversed during the swap
 }
 
 // ComputeSwapQuote simulates a swap exact-in against a slice of BinArrays.
 // Matches the TS SDK swapQuote() in index.ts:5527-5745.
 func ComputeSwapQuote(
-	lbPair *LbPair,
-	binArrays []BinArray,
+	lbPair *LBPair,
+	binArrays []*BinArray,
 	inAmount *big.Int,
 	swapForY bool,
 	isPartialFill bool,
@@ -50,7 +50,7 @@ func ComputeSwapQuote(
 	}
 
 	// Index bin arrays by their index
-	binArrayMap := make(map[int64]BinArray)
+	binArrayMap := make(map[int64]*BinArray)
 	for _, ba := range binArrays {
 		binArrayMap[ba.Index] = ba
 	}
@@ -58,7 +58,7 @@ func ComputeSwapQuote(
 	transferFeeExcludedAmountIn, _ := CalculateTransferFeeExcludedAmount(inTransferFee, inAmount)
 	inAmountLeft := new(big.Int).Set(transferFeeExcludedAmountIn)
 	vParamClone := lbPair.VParameters
-	activeId := lbPair.ActiveId
+	activeId := lbPair.ActiveID
 
 	binStep := lbPair.BinStep
 	sParameters := lbParamToStaticParameters(lbPair)
@@ -69,14 +69,14 @@ func ComputeSwapQuote(
 	UpdateReference(activeId, &vParamClone, sParameters, currentTimestamp)
 
 	var startBin *Bin
-	var lastFilledActiveBinId int32 = activeId
+	var lastFilledActiveBinID int32 = activeId
 	totalOutAmount := big.NewInt(0)
 	feeAmount := big.NewInt(0)
 	protocolFeeAmount := big.NewInt(0)
 	binArraysForSwap := make(map[int64]bool)
 
 	for inAmountLeft.Sign() > 0 {
-		binArrayIndex := BinIdToBinArrayIndex(activeId)
+		binArrayIndex := BinIDToBinArrayIndex(activeId)
 		binArray, exists := binArrayMap[binArrayIndex]
 		if !exists {
 			if isPartialFill {
@@ -87,13 +87,13 @@ func ComputeSwapQuote(
 
 		binArraysForSwap[binArrayIndex] = true
 
-		lowerBinId, upperBinId := GetBinArrayLowerUpperBinId(binArrayIndex)
-		if activeId < lowerBinId || activeId > upperBinId {
+		lowerBinID, upperBinID := GetBinArrayLowerUpperBinID(binArrayIndex)
+		if activeId < lowerBinID || activeId > upperBinID {
 			return nil, fmt.Errorf("active ID %d out of bounds for BinArray index %d", activeId, binArrayIndex)
 		}
 
-		binIdx := activeId - lowerBinId
-		bin := binArray.Bins[binIdx]
+		binIDx := activeId - lowerBinID
+		bin := binArray.Bins[binIDx]
 
 		maxAmountOut := GetBinMaxAmountOut(bin, swapForY, supportLimitOrder)
 		if maxAmountOut.Sign() > 0 {
@@ -119,7 +119,7 @@ func ComputeSwapQuote(
 				if startBin == nil {
 					startBin = &bin
 				}
-				lastFilledActiveBinId = activeId
+				lastFilledActiveBinID = activeId
 			}
 		}
 
@@ -187,19 +187,19 @@ func ComputeSwapQuote(
 		Fee:                   feeAmount,
 		ProtocolFee:           protocolFeeAmount,
 		PriceImpact:           priceImpact,
-		LastFilledActiveBinId: lastFilledActiveBinId,
+		LastFilledActiveBinID: lastFilledActiveBinID,
 		BinArraysPubkey:       binArraysPubkey,
 	}, nil
 }
 
-// lbParamToStaticParameters wraps LbPair parameters to StaticParameters.
-func lbParamToStaticParameters(lbPair *LbPair) StaticParameters {
+// lbParamToStaticParameters wraps LBPair parameters to StaticParameters.
+func lbParamToStaticParameters(lbPair *LBPair) StaticParameters {
 	return lbPair.Parameters
 }
 
 // isSupportLimitOrder checks if the pool supports limit orders.
 // Matches TS SDK lbPair.ts:46-60 exactly.
-func isSupportLimitOrder(lbPair *LbPair) bool {
+func isSupportLimitOrder(lbPair *LBPair) bool {
 	functionType := lbPair.Parameters.FunctionType
 	switch functionType {
 	case FunctionTypeLimitOrder:

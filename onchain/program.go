@@ -69,10 +69,10 @@ func DeriveOracle(lbPair solana.PublicKey) (solana.PublicKey, uint8, error) {
 }
 
 // DerivePosition derives the PDA for a position account.
-// Uses two's complement for negative lowerBinId.
-func DerivePosition(lbPair solana.PublicKey, base solana.PublicKey, lowerBinId int32, width int32) (solana.PublicKey, uint8, error) {
-	lowerBinIdBytes := make([]byte, 4)
-	binary.LittleEndian.PutUint32(lowerBinIdBytes, uint32(lowerBinId)) // Handles two's complement for negative automatically
+// Uses two's complement for negative lowerBinID.
+func DerivePosition(lbPair solana.PublicKey, base solana.PublicKey, lowerBinID int32, width int32) (solana.PublicKey, uint8, error) {
+	lowerBinIDBytes := make([]byte, 4)
+	binary.LittleEndian.PutUint32(lowerBinIDBytes, uint32(lowerBinID)) // Handles two's complement for negative automatically
 
 	widthBytes := make([]byte, 4)
 	binary.LittleEndian.PutUint32(widthBytes, uint32(width))
@@ -81,14 +81,14 @@ func DerivePosition(lbPair solana.PublicKey, base solana.PublicKey, lowerBinId i
 		[]byte("position"),
 		lbPair.Bytes(),
 		base.Bytes(),
-		lowerBinIdBytes,
+		lowerBinIDBytes,
 		widthBytes,
 	}
 	return solana.FindProgramAddress(seeds, ProgramID)
 }
 
-// DeriveLbPair derives the PDA for an LbPair from token mints and bin step.
-func DeriveLbPair(tokenX solana.PublicKey, tokenY solana.PublicKey, binStep uint16) (solana.PublicKey, uint8, error) {
+// DeriveLBPair derives the PDA for an LBPair from token mints and bin step.
+func DeriveLBPair(tokenX solana.PublicKey, tokenY solana.PublicKey, binStep uint16) (solana.PublicKey, uint8, error) {
 	minKey, maxKey := sortTokenMints(tokenX, tokenY)
 
 	binStepBytes := make([]byte, 2)
@@ -102,8 +102,8 @@ func DeriveLbPair(tokenX solana.PublicKey, tokenY solana.PublicKey, binStep uint
 	return solana.FindProgramAddress(seeds, ProgramID)
 }
 
-// DeriveLbPair2 derives the PDA for an LbPair v2 from token mints, bin step, and base factor.
-func DeriveLbPair2(tokenX solana.PublicKey, tokenY solana.PublicKey, binStep uint16, baseFactor uint16) (solana.PublicKey, uint8, error) {
+// DeriveLBPair2 derives the PDA for an LBPair v2 from token mints, bin step, and base factor.
+func DeriveLBPair2(tokenX solana.PublicKey, tokenY solana.PublicKey, binStep uint16, baseFactor uint16) (solana.PublicKey, uint8, error) {
 	minKey, maxKey := sortTokenMints(tokenX, tokenY)
 
 	binStepBytes := make([]byte, 2)
@@ -159,26 +159,26 @@ func sortTokenMints(tokenX solana.PublicKey, tokenY solana.PublicKey) (solana.Pu
 	return tokenX, tokenY
 }
 
-// BinIdToBinArrayIndex returns the index of the BinArray containing the binId.
-// Equivalent to TypeScript binId.divmod(70) behavior with floor division for negatives.
-func BinIdToBinArrayIndex(binId int32) int64 {
-	idx := int64(binId) / MaxBinArraySize
-	mod := int64(binId) % MaxBinArraySize
-	if binId < 0 && mod != 0 {
+// BinIDToBinArrayIndex returns the index of the BinArray containing the binID.
+// Equivalent to TypeScript binID.divmod(70) behavior with floor division for negatives.
+func BinIDToBinArrayIndex(binID int32) int64 {
+	idx := int64(binID) / MaxBinArraySize
+	mod := int64(binID) % MaxBinArraySize
+	if binID < 0 && mod != 0 {
 		return idx - 1
 	}
 	return idx
 }
 
-// GetBinArrayLowerUpperBinId returns the lower and upper bin ID limits of a BinArray index.
-func GetBinArrayLowerUpperBinId(binArrayIndex int64) (int32, int32) {
-	lowerBinId := int32(binArrayIndex * MaxBinArraySize)
-	upperBinId := lowerBinId + int32(MaxBinArraySize) - 1
-	return lowerBinId, upperBinId
+// GetBinArrayLowerUpperBinID returns the lower and upper bin ID limits of a BinArray index.
+func GetBinArrayLowerUpperBinID(binArrayIndex int64) (int32, int32) {
+	lowerBinID := int32(binArrayIndex * MaxBinArraySize)
+	upperBinID := lowerBinID + int32(MaxBinArraySize) - 1
+	return lowerBinID, upperBinID
 }
 
-// ILM_BASE is the base public key used for customizable permissionless LbPairs.
-var ILM_BASE = solana.MustPublicKeyFromBase58("MFGQxwAmB91SwuYX36okv2Qmdc9aMuHTwWGUrp4AtB1")
+// ilmBase is the base public key used for customizable permissionless LBPairs.
+var ilmBase = solana.MustPublicKeyFromBase58("MFGQxwAmB91SwuYX36okv2Qmdc9aMuHTwWGUrp4AtB1")
 
 // DerivePresetParameterWithIndex derives the PDA for a preset parameter with index.
 func DerivePresetParameterWithIndex(index uint16) (solana.PublicKey, uint8, error) {
@@ -192,8 +192,8 @@ func DerivePresetParameterWithIndex(index uint16) (solana.PublicKey, uint8, erro
 	return solana.FindProgramAddress(seeds, ProgramID)
 }
 
-// DeriveLbPairWithPresetParamWithIndexKey derives the PDA for an LbPair using a preset parameter key.
-func DeriveLbPairWithPresetParamWithIndexKey(presetParameterKey solana.PublicKey, tokenX solana.PublicKey, tokenY solana.PublicKey) (solana.PublicKey, uint8, error) {
+// DeriveLBPairWithPresetParamWithIndexKey derives the PDA for an LBPair using a preset parameter key.
+func DeriveLBPairWithPresetParamWithIndexKey(presetParameterKey solana.PublicKey, tokenX solana.PublicKey, tokenY solana.PublicKey) (solana.PublicKey, uint8, error) {
 	minKey, maxKey := sortTokenMints(tokenX, tokenY)
 	seeds := [][]byte{
 		presetParameterKey.Bytes(),
@@ -203,19 +203,19 @@ func DeriveLbPairWithPresetParamWithIndexKey(presetParameterKey solana.PublicKey
 	return solana.FindProgramAddress(seeds, ProgramID)
 }
 
-// DeriveCustomizablePermissionlessLbPair derives the PDA for a customizable permissionless LbPair.
-func DeriveCustomizablePermissionlessLbPair(tokenX solana.PublicKey, tokenY solana.PublicKey) (solana.PublicKey, uint8, error) {
+// DeriveCustomizablePermissionlessLBPair derives the PDA for a customizable permissionless LBPair.
+func DeriveCustomizablePermissionlessLBPair(tokenX solana.PublicKey, tokenY solana.PublicKey) (solana.PublicKey, uint8, error) {
 	minKey, maxKey := sortTokenMints(tokenX, tokenY)
 	seeds := [][]byte{
-		ILM_BASE.Bytes(),
+		ilmBase.Bytes(),
 		minKey.Bytes(),
 		maxKey.Bytes(),
 	}
 	return solana.FindProgramAddress(seeds, ProgramID)
 }
 
-// DerivePermissionLbPair derives the PDA for a permissioned LbPair.
-func DerivePermissionLbPair(baseKey solana.PublicKey, tokenX solana.PublicKey, tokenY solana.PublicKey, binStep uint16) (solana.PublicKey, uint8, error) {
+// DerivePermissionLBPair derives the PDA for a permissioned LBPair.
+func DerivePermissionLBPair(baseKey solana.PublicKey, tokenX solana.PublicKey, tokenY solana.PublicKey, binStep uint16) (solana.PublicKey, uint8, error) {
 	minKey, maxKey := sortTokenMints(tokenX, tokenY)
 	binStepBytes := make([]byte, 2)
 	binary.LittleEndian.PutUint16(binStepBytes, binStep)

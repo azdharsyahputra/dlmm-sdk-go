@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/url"
 	"strconv"
@@ -47,7 +48,7 @@ func (c *Client) GetPools(ctx context.Context, params *GetPoolsParams) (*PoolsRe
 // GetPool retrieves metadata and current state for a single pool.
 func (c *Client) GetPool(ctx context.Context, address string) (*PoolResponse, error) {
 	if address == "" {
-		return nil, fmt.Errorf("pool address cannot be empty")
+		return nil, errors.New("pool address cannot be empty")
 	}
 
 	path := fmt.Sprintf("/pools/%s", address)
@@ -68,7 +69,7 @@ type GetOHLCVParams struct {
 // GetOHLCV retrieves OHLCV candles for a single pool.
 func (c *Client) GetOHLCV(ctx context.Context, address string, params *GetOHLCVParams) (*OHLCVResponse, error) {
 	if address == "" {
-		return nil, fmt.Errorf("pool address cannot be empty")
+		return nil, errors.New("pool address cannot be empty")
 	}
 
 	q := url.Values{}
@@ -102,7 +103,7 @@ type GetVolumeHistoryParams struct {
 // GetVolumeHistory retrieves historical volume for a pool.
 func (c *Client) GetVolumeHistory(ctx context.Context, address string, params *GetVolumeHistoryParams) (*VolumeHistoryResponse, error) {
 	if address == "" {
-		return nil, fmt.Errorf("pool address cannot be empty")
+		return nil, errors.New("pool address cannot be empty")
 	}
 
 	q := url.Values{}

@@ -16,8 +16,8 @@ type StaticParameters struct {
 	ReductionFactor          uint16
 	VariableFeeControl       uint32
 	MaxVolatilityAccumulator uint32
-	MinBinId                 int32
-	MaxBinId                 int32
+	MinBinID                 int32
+	MaxBinID                 int32
 	ProtocolShare            uint16
 	BaseFeePowerFactor       uint8
 	FunctionType             uint8
@@ -53,14 +53,14 @@ type RewardInfo struct {
 	CumulativeSecondsWithEmptyLiquidityReward uint64
 }
 
-// LbPair represents the LB pair state.
-type LbPair struct {
+// LBPair represents the LB pair state.
+type LBPair struct {
 	Parameters               StaticParameters
 	VParameters              VariableParameters
 	BumpSeed                 [1]uint8
 	BinStepSeed              [2]uint8
 	PairType                 uint8
-	ActiveId                 int32
+	ActiveID                 int32
 	BinStep                  uint16
 	Status                   uint8
 	RequireBaseFactorSeed    uint8
@@ -116,7 +116,7 @@ type BinArray struct {
 	Index    int64
 	Version  uint8
 	Padding1 [7]uint8
-	LbPair   solana.PublicKey
+	LBPair   solana.PublicKey
 	Bins     [70]Bin
 }
 
@@ -136,13 +136,13 @@ type FeeInfo struct {
 
 // PositionV2 represents a user position in DLMM.
 type PositionV2 struct {
-	LbPair                      solana.PublicKey
+	LBPair                      solana.PublicKey
 	Owner                       solana.PublicKey
 	LiquidityShares             [70][16]byte // array of 70 u128
 	RewardInfos                 [70]UserRewardInfo
 	FeeInfos                    [70]FeeInfo
-	LowerBinId                  int32
-	UpperBinId                  int32
+	LowerBinID                  int32
+	UpperBinID                  int32
 	LastUpdatedAt               int64
 	TotalClaimedFeeXAmount      uint64
 	TotalClaimedFeeYAmount      uint64
@@ -158,13 +158,13 @@ type PositionV2 struct {
 
 // BinArrayBitmapExtension represents extension state when bitmap overflows.
 type BinArrayBitmapExtension struct {
-	LbPair                 solana.PublicKey
+	LBPair                 solana.PublicKey
 	PositiveBinArrayBitmap [12][8]uint64
 	NegativeBinArrayBitmap [12][8]uint64
 }
 
 // DeserializeAccount deserializes Anchor account skipping the 8-byte discriminator.
-func DeserializeAccount(data []byte, dest interface{}) error {
+func DecodeLBPair(data []byte, dest interface{}) error {
 	if len(data) < 8 {
 		return fmt.Errorf("account data too short (less than 8 bytes)")
 	}

@@ -8,35 +8,35 @@ import (
 )
 
 func TestDecimalPriceMath(t *testing.T) {
-	binId := int32(-6388)
+	binID := int32(-6388)
 	binStep := uint16(4)
 	decimalsX := int32(9)
 	decimalsY := int32(6)
 
 	// 1. Convert bin to lamport price
-	priceDec := onchain.BinIdToPriceDecimal(binId, binStep)
-	priceFloat := onchain.BinIdToPrice(binId, binStep)
+	priceDec := onchain.BinIDToPriceDecimal(binID, binStep)
+	priceFloat := onchain.BinIDToPrice(binID, binStep)
 
 	priceDecFloat, _ := priceDec.Float64()
 	if priceDecFloat != priceFloat {
-		t.Errorf("Mismatch in BinIdToPrice: decimal=%f, float=%f", priceDecFloat, priceFloat)
+		t.Errorf("Mismatch in BinIDToPrice: decimal=%f, float=%f", priceDecFloat, priceFloat)
 	}
 
 	// 2. Convert bin to token price
-	tokenPriceDec := onchain.BinIdToTokenPriceDecimal(binId, binStep, decimalsX, decimalsY)
-	tokenPriceFloat := onchain.BinIdToTokenPrice(binId, binStep, decimalsX, decimalsY)
+	tokenPriceDec := onchain.BinIDToTokenPriceDecimal(binID, binStep, decimalsX, decimalsY)
+	tokenPriceFloat := onchain.BinIDToTokenPrice(binID, binStep, decimalsX, decimalsY)
 
 	tokenPriceDecFloat, _ := tokenPriceDec.Float64()
 	if tokenPriceDecFloat != tokenPriceFloat {
-		t.Errorf("Mismatch in BinIdToTokenPrice: decimal=%f, float=%f", tokenPriceDecFloat, tokenPriceFloat)
+		t.Errorf("Mismatch in BinIDToTokenPrice: decimal=%f, float=%f", tokenPriceDecFloat, tokenPriceFloat)
 	}
 
 	// 3. Convert token price to bin ID
 	targetPrice := decimal.NewFromFloat(77.716391)
-	calculatedBinId := onchain.TokenPriceToBinIdDecimal(targetPrice, binStep, decimalsX, decimalsY)
+	calculatedBinID := onchain.TokenPriceToBinIDDecimal(targetPrice, binStep, decimalsX, decimalsY)
 
-	if calculatedBinId != binId {
-		t.Errorf("Expected bin ID %d, got %d for token price %s", binId, calculatedBinId, targetPrice.String())
+	if calculatedBinID != binID {
+		t.Errorf("Expected bin ID %d, got %d for token price %s", binID, calculatedBinID, targetPrice.String())
 	}
 
 	t.Logf("Decimal Price Math verified successfully!")

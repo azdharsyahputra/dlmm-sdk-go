@@ -44,14 +44,14 @@ func main() {
 	}
 
 	fmt.Println("\n3. Deserializing raw bytes into Go struct...")
-	var pair onchain.LbPair
-	err = onchain.DeserializeAccount(accountInfo.Value.Data.GetBinary(), &pair)
+	var pair onchain.LBPair
+	err = onchain.DecodeLBPair(accountInfo.Value.Data.GetBinary(), &pair)
 	if err != nil {
 		log.Fatalf("Failed to decode LbPair: %v", err)
 	}
 
 	fmt.Println("   Decode Success!")
-	fmt.Printf("   - Pool Active Bin ID : %d\n", pair.ActiveId)
+	fmt.Printf("   - Pool Active Bin ID : %d\n", pair.ActiveID)
 	fmt.Printf("   - Bin Step           : %d\n", pair.BinStep)
 	fmt.Printf("   - Reserve X          : %s\n", pair.ReserveX.String())
 	fmt.Printf("   - Reserve Y          : %s\n", pair.ReserveY.String())

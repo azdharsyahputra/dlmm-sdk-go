@@ -24,7 +24,7 @@ func TestSwapInstructionBuilder(t *testing.T) {
 	ba2 := solana.NewWallet().PublicKey()
 
 	params := onchain.SwapParams{
-		LbPair:        lbPair,
+		LBPair:        lbPair,
 		ReserveX:      reserveX,
 		ReserveY:      reserveY,
 		UserTokenIn:   userTokenIn,
@@ -68,7 +68,7 @@ func TestSwapInstructionBuilder(t *testing.T) {
 
 func TestClaimFeeInstructionBuilder(t *testing.T) {
 	params := onchain.ClaimFeeParams{
-		LbPair:        solana.NewWallet().PublicKey(),
+		LBPair:        solana.NewWallet().PublicKey(),
 		Position:      solana.NewWallet().PublicKey(),
 		Sender:        solana.NewWallet().PublicKey(),
 		ReserveX:      solana.NewWallet().PublicKey(),
@@ -79,8 +79,8 @@ func TestClaimFeeInstructionBuilder(t *testing.T) {
 		TokenYMint:    solana.NewWallet().PublicKey(),
 		TokenProgramX: solana.TokenProgramID,
 		TokenProgramY: solana.TokenProgramID,
-		MinBinId:      -100,
-		MaxBinId:      100,
+		MinBinID:      -100,
+		MaxBinID:      100,
 	}
 
 	ix, err := onchain.NewClaimFeeInstruction(params)
@@ -113,7 +113,7 @@ func TestClaimFeeInstructionBuilder(t *testing.T) {
 
 func TestClaimRewardInstructionBuilder(t *testing.T) {
 	params := onchain.ClaimRewardParams{
-		LbPair:           solana.NewWallet().PublicKey(),
+		LBPair:           solana.NewWallet().PublicKey(),
 		Position:         solana.NewWallet().PublicKey(),
 		Sender:           solana.NewWallet().PublicKey(),
 		RewardVault:      solana.NewWallet().PublicKey(),
@@ -121,8 +121,8 @@ func TestClaimRewardInstructionBuilder(t *testing.T) {
 		UserTokenAccount: solana.NewWallet().PublicKey(),
 		TokenProgram:     solana.TokenProgramID,
 		RewardIndex:      0,
-		MinBinId:         -100,
-		MaxBinId:         100,
+		MinBinID:         -100,
+		MaxBinID:         100,
 	}
 
 	ix, err := onchain.NewClaimRewardInstruction(params)

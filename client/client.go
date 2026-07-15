@@ -16,17 +16,17 @@ type Client struct {
 }
 
 // Option is a function to configure the Client.
-type Option func(*Client)
+type ClientOption func(*Client)
 
 // WithHTTPClient sets a custom HTTP client.
-func WithHTTPClient(httpClient *http.Client) Option {
+func WithHTTPClient(httpClient *http.Client) ClientOption {
 	return func(c *Client) {
 		c.httpClient = httpClient
 	}
 }
 
 // NewClient returns a new Client.
-func NewClient(baseURL string, opts ...Option) *Client {
+func NewClient(baseURL string, opts ...ClientOption) *Client {
 	if baseURL == "" {
 		baseURL = "https://dlmm.datapi.meteora.ag"
 	}

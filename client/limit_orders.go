@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/url"
 	"strconv"
@@ -25,16 +26,16 @@ func addPaginationParams(q url.Values, params *GetLimitOrdersParams) {
 }
 
 // GetClosedLimitOrderPools retrieves closed limit order pools summary for a wallet.
-func (c *Client) GetClosedLimitOrderPools(ctx context.Context, wallet string, params *GetLimitOrdersParams) (*PaginationResponse_ClosedLimitOrderPoolSummary, error) {
+func (c *Client) GetClosedLimitOrderPools(ctx context.Context, wallet string, params *GetLimitOrdersParams) (*ClosedLimitOrderPoolSummaryPage, error) {
 	if wallet == "" {
-		return nil, fmt.Errorf("wallet address cannot be empty")
+		return nil, errors.New("wallet address cannot be empty")
 	}
 
 	q := url.Values{}
 	addPaginationParams(q, params)
 
 	path := fmt.Sprintf("/wallets/%s/limit_orders/closed/pools", wallet)
-	var resp PaginationResponse_ClosedLimitOrderPoolSummary
+	var resp ClosedLimitOrderPoolSummaryPage
 	if err := c.doRequest(ctx, path, q, &resp); err != nil {
 		return nil, err
 	}
@@ -44,7 +45,7 @@ func (c *Client) GetClosedLimitOrderPools(ctx context.Context, wallet string, pa
 // GetClosedLimitOrdersForPool retrieves closed limit orders details for a wallet in a pool.
 func (c *Client) GetClosedLimitOrdersForPool(ctx context.Context, wallet string, poolAddress string, params *GetLimitOrdersParams) (*ClosedLimitOrdersForPoolResponse, error) {
 	if wallet == "" || poolAddress == "" {
-		return nil, fmt.Errorf("wallet address and pool address cannot be empty")
+		return nil, errors.New("wallet address and pool address cannot be empty")
 	}
 
 	q := url.Values{}
@@ -59,16 +60,16 @@ func (c *Client) GetClosedLimitOrdersForPool(ctx context.Context, wallet string,
 }
 
 // GetOpenLimitOrderPools retrieves open limit order pools summary for a wallet.
-func (c *Client) GetOpenLimitOrderPools(ctx context.Context, wallet string, params *GetLimitOrdersParams) (*PaginationResponse_OpenLimitOrderPoolSummary, error) {
+func (c *Client) GetOpenLimitOrderPools(ctx context.Context, wallet string, params *GetLimitOrdersParams) (*OpenLimitOrderPoolSummaryPage, error) {
 	if wallet == "" {
-		return nil, fmt.Errorf("wallet address cannot be empty")
+		return nil, errors.New("wallet address cannot be empty")
 	}
 
 	q := url.Values{}
 	addPaginationParams(q, params)
 
 	path := fmt.Sprintf("/wallets/%s/limit_orders/open/pools", wallet)
-	var resp PaginationResponse_OpenLimitOrderPoolSummary
+	var resp OpenLimitOrderPoolSummaryPage
 	if err := c.doRequest(ctx, path, q, &resp); err != nil {
 		return nil, err
 	}
@@ -78,7 +79,7 @@ func (c *Client) GetOpenLimitOrderPools(ctx context.Context, wallet string, para
 // GetOpenLimitOrdersForPool retrieves open limit orders details for a wallet in a pool.
 func (c *Client) GetOpenLimitOrdersForPool(ctx context.Context, wallet string, poolAddress string, params *GetLimitOrdersParams) (*OpenLimitOrdersForPoolResponse, error) {
 	if wallet == "" || poolAddress == "" {
-		return nil, fmt.Errorf("wallet address and pool address cannot be empty")
+		return nil, errors.New("wallet address and pool address cannot be empty")
 	}
 
 	q := url.Values{}
@@ -95,7 +96,7 @@ func (c *Client) GetOpenLimitOrdersForPool(ctx context.Context, wallet string, p
 // GetBonusClaimedForPool retrieves realized bonus claimed by a wallet in a pool.
 func (c *Client) GetBonusClaimedForPool(ctx context.Context, wallet string, poolAddress string) (*BonusClaimedResponse, error) {
 	if wallet == "" || poolAddress == "" {
-		return nil, fmt.Errorf("wallet address and pool address cannot be empty")
+		return nil, errors.New("wallet address and pool address cannot be empty")
 	}
 
 	path := fmt.Sprintf("/wallets/%s/limit_orders/pools/%s/bonus_claimed", wallet, poolAddress)
@@ -109,7 +110,7 @@ func (c *Client) GetBonusClaimedForPool(ctx context.Context, wallet string, pool
 // GetLimitOrderSummary retrieves aggregate limit order totals for a wallet.
 func (c *Client) GetLimitOrderSummary(ctx context.Context, wallet string) (*LimitOrderSummaryResponse, error) {
 	if wallet == "" {
-		return nil, fmt.Errorf("wallet address cannot be empty")
+		return nil, errors.New("wallet address cannot be empty")
 	}
 
 	path := fmt.Sprintf("/wallets/%s/limit_orders/summary", wallet)
@@ -123,7 +124,7 @@ func (c *Client) GetLimitOrderSummary(ctx context.Context, wallet string) (*Limi
 // GetWalletPoolTotalClaims retrieves combined claimed fees and rewards for a wallet in a pool.
 func (c *Client) GetWalletPoolTotalClaims(ctx context.Context, wallet string, poolAddress string) (*GetWalletTotalClaimsResponse, error) {
 	if wallet == "" || poolAddress == "" {
-		return nil, fmt.Errorf("wallet address and pool address cannot be empty")
+		return nil, errors.New("wallet address and pool address cannot be empty")
 	}
 
 	path := fmt.Sprintf("/wallets/%s/pools/%s/total_claims", wallet, poolAddress)

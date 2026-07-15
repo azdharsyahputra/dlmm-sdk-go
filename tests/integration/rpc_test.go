@@ -19,16 +19,16 @@ func TestLiveOnChainLBKeyPair(t *testing.T) {
 	// SOL-USDC pool address on mainnet
 	poolAddr := solana.MustPublicKeyFromBase58("5rCf1DM8LjKTw4YqhnoLcngyZYeNnQqztScTogYHAS6")
 
-	// 1. Fetch LbPair
-	pair, err := c.GetLbPair(ctx, poolAddr)
+	// 1. Fetch LBPair
+	pair, err := c.GetLBPair(ctx, poolAddr)
 	if err != nil {
-		t.Fatalf("Failed to fetch LbPair: %v", err)
+		t.Fatalf("Failed to fetch LBPair: %v", err)
 	}
 
-	t.Logf("LbPair Token X: %s", pair.TokenXMint.String())
-	t.Logf("LbPair Token Y: %s", pair.TokenYMint.String())
-	t.Logf("LbPair Active Bin ID: %d", pair.ActiveId)
-	t.Logf("LbPair Bin Step: %d BPS", pair.BinStep)
+	t.Logf("LBPair Token X: %s", pair.TokenXMint.String())
+	t.Logf("LBPair Token Y: %s", pair.TokenYMint.String())
+	t.Logf("LBPair Active Bin ID: %d", pair.ActiveID)
+	t.Logf("LBPair Bin Step: %d BPS", pair.BinStep)
 
 	// Verify token mints are not empty public keys
 	if pair.TokenXMint.IsZero() || pair.TokenYMint.IsZero() {
@@ -36,22 +36,22 @@ func TestLiveOnChainLBKeyPair(t *testing.T) {
 	}
 
 	// 2. Fetch active BinArray
-	binArrayIndex := onchain.BinIdToBinArrayIndex(pair.ActiveId)
-	t.Logf("Active Bin ID %d is in BinArray index %d", pair.ActiveId, binArrayIndex)
+	binArrayIndex := onchain.BinIDToBinArrayIndex(pair.ActiveID)
+	t.Logf("Active Bin ID %d is in BinArray index %d", pair.ActiveID, binArrayIndex)
 
 	binArray, err := c.GetBinArrayByIndex(ctx, poolAddr, binArrayIndex)
 	if err != nil {
 		t.Fatalf("Failed to fetch BinArray: %v", err)
 	}
 
-	if binArray.LbPair != poolAddr {
-		t.Errorf("BinArray LbPair address mismatch: expected %s, got %s", poolAddr.String(), binArray.LbPair.String())
+	if binArray.LBPair != poolAddr {
+		t.Errorf("BinArray LBPair address mismatch: expected %s, got %s", poolAddr.String(), binArray.LBPair.String())
 	}
 
 	t.Logf("BinArray Index: %d", binArray.Index)
 
 	// 3. Extract active Bin
-	activeBin, err := onchain.GetBinFromBinArrayHelper(pair.ActiveId, binArray)
+	activeBin, err := binArray.GetBin(pair.ActiveID)
 	if err != nil {
 		t.Fatalf("Failed to get active bin from BinArray: %v", err)
 	}
@@ -59,8 +59,8 @@ func TestLiveOnChainLBKeyPair(t *testing.T) {
 	t.Logf("Active Bin X Amount: %d, Y Amount: %d", activeBin.AmountX, activeBin.AmountY)
 
 	// 4. Calculate prices
-	lamportPrice := onchain.BinIdToPrice(pair.ActiveId, pair.BinStep)
-	tokenPrice := onchain.BinIdToTokenPrice(pair.ActiveId, pair.BinStep, 9, 6) // SOL is 9 decimals, USDC is 6 decimals
+	lamportPrice := onchain.BinIDToPrice(pair.ActiveID, pair.BinStep)
+	tokenPrice := onchain.BinIDToTokenPrice(pair.ActiveID, pair.BinStep, 9, 6) // SOL is 9 decimals, USDC is 6 decimals
 	t.Logf("Calculated Lamport Price: %f", lamportPrice)
 	t.Logf("Calculated SOL-USDC Token Price: %f (USDC per SOL)", tokenPrice)
 
