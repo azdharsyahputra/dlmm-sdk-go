@@ -1,4 +1,4 @@
-package onchain_test
+package unit_test
 
 import (
 	"context"
@@ -74,4 +74,33 @@ func TestSwapQuoteSOLUSDC(t *testing.T) {
 	t.Logf("Fee Paid (USDC units): %s", quoteX.Fee.String())
 	t.Logf("Price Impact: %f%%", quoteX.PriceImpact)
 	t.Logf("Starting Active Bin ID: %d, Final Active Bin ID: %d", pair.ActiveId, quoteX.LastFilledActiveBinId)
+}
+
+func BenchmarkComputeSwapQuote(b *testing.B) {
+	c := onchain.NewClient(rpc.MainNetBeta_RPC)
+	ctx := context.Background()
+	poolAddr := solana.MustPublicKeyFromBase58("5rCf1DM8LjKTw4YqhnoLcngyZYeNnQqztScTogYHAS6")
+
+	pair, err := c.GetLbPair(ctx, poolAddr)
+	if err != nil {
+		b.Fatalf("Failed to fetch LbPair: %v", err)
+	}
+
+	activeIdx := onchain.BinIdToBinArrayIndex(pair.ActiveId)
+	indices := []int64{activeIdx - 1, activeIdx, activeIdx + 1}
+	var binArrays []onchain.BinArray
+
+	for _, idx := range indices {
+		ba, err := c.GetBinArrayByIndex(ctx, poolAddr, idx)
+		if err == nil {
+			binArrays = append(binArrays, *ba)
+		}
+	}
+
+	inAmount := new(big.Int).SetUint64(1_000_000_000)
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _ = onchain.ComputeSwapQuote(pair, binArrays, inAmount, true, false, 50, 0, nil, nil)
+	}
 }

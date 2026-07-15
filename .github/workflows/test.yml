@@ -1,0 +1,55 @@
+name: DLMM SDK Go Tests
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - testing
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21' # Adjust this to match go.mod if necessary, or use a matrix
+
+      - name: Install dependencies
+        run: go mod download
+
+      - name: Run Unit Tests
+        run: go test ./tests/unit/... -short -v
+
+      - name: Run Integration Tests
+        run: go test ./tests/integration/... -short -v
+
+      - name: Run Benchmarks
+        run: go test -bench=. ./tests/unit/...
+
+  e2e-test:
+    runs-on: ubuntu-latest
+    needs: test
+    # Only run E2E if secrets are configured
+    if: ${{ env.DEVNET_RPC_URL != '' }}
+    env:
+      DEVNET_RPC_URL: ${{ secrets.DEVNET_RPC_URL }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Run E2E Tests
+        run: go test ./tests/e2e/... -v
